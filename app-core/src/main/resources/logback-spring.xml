@@ -1,0 +1,17 @@
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+<!--	<springProfile >-->
+<!--		<logger name="org.springframework.web" level="INFO"/>-->
+<!--		<logger name="dao" level="INFO" />-->
+<!--		<logger name="tw.mike.star.appcore" level="DEBUG" />-->
+<!--	</springProfile>-->
+
+	<root level="INFO">
+		<logger name="org.springframework.web" level="INFO"/>
+		<logger name="dao" level="INFO" />
+		<logger name="tw.mike.star.appcore" level="DEBUG" />
+		<appender-ref ref="CONSOLE"/>
+	</root>
+
+</configuration>

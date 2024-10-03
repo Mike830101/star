@@ -36,6 +36,19 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
+
+    // encryption: bouncy castle, jasypt
+    implementation("org.bouncycastle:bcprov-jdk15on:1.70")
+    implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
+
+    // uuid generator
+    implementation("com.fasterxml.uuid:java-uuid-generator:4.2.0")
+
+    // mybatis
+    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
+    implementation("org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.5.2")
+//    implementation("org.mybatis:mybatis-typehandlers-jsr310:1.0.2")
+
     // Postgres
     runtimeOnly("org.postgresql:postgresql")
 
@@ -46,7 +59,6 @@ dependencies {
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3")
     testImplementation("org.springframework.security:spring-security-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

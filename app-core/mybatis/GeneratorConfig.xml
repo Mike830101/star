@@ -7,7 +7,7 @@
     <classPathEntry location="./postgresql-42.7.3.jar"/>
 
     <!-- 定義生成器配置 -->
-    <context id="context1" targetRuntime="MyBatis3DynamicSql" defaultModelType="conditional">
+    <context id="context1" targetRuntime="MyBatis3Kotlin" defaultModelType="conditional">
 
         <!-- 屬性設置 -->
         <property name="autoDelimitKeywords" value="true"/>
@@ -36,9 +36,9 @@
 
         <!-- 數據庫連接配置 -->
         <jdbcConnection driverClass="org.postgresql.Driver"
-                        connectionURL="jdbc:postgresql://192.168.1.214:5432/mydata?timezone=Asia/Taipei"
+                        connectionURL="jdbc:postgresql://localhost:5433/postgres"
                         userId="postgres"
-                        password="riease1qaz">
+                        password="star123">
             <!--設置可以獲取表的 remarks 信息-->
             <property name="useInformationSchema" value="true"/>
             <!--設置可以獲取 remarks 信息-->
@@ -54,208 +54,42 @@
         </javaTypeResolver>
 
         <!-- Java 實體類生成配置 -->
-        <javaModelGenerator targetPackage="tw.gov.moda.mydata.uma.entity"
-                            targetProject="../src/main/java">
+        <javaModelGenerator targetPackage="tw.mike.star.appcore.entity"
+                            targetProject="../src/main/kotlin">
             <!-- 啟用子包 -->
             <property name="enableSubPackages" value="true"/>
             <!-- 自動修剪字符串 -->
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
+
         <!-- Java Mapper 生成配置 -->
-        <javaClientGenerator targetPackage="tw.gov.moda.mydata.uma.mapper"
-                             targetProject="../src/main/java"
-                             type="ANNOTATEDMAPPER">
+        <javaClientGenerator targetPackage="tw.mike.star.appcore.mapper"
+                             targetProject="../src/main/kotlin">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <!--        <table tableName="connect_record"/>-->
-
-        <!--        <table tableName="about_rank">-->
-        <!--            <columnOverride column="type" javaType="tw.gov.moda.mydata.uma.emum.AboutRankType" jdbcType="OTHER"-->
-        <!--                            typeHandler="tw.gov.moda.mydata.uma.helper.AboutRankTypeHandler"/>-->
-        <!--            <columnOverride column="status" javaType="tw.gov.moda.mydata.uma.emum.AboutRankStatus" jdbcType="OTHER"-->
-        <!--                            typeHandler="tw.gov.moda.mydata.uma.helper.AboutRankStatusHandler"/>-->
-        <!--        </table>-->
 
         <table tableName="sys_user">
-            <columnOverride column="egov_acc" javaType="java.lang.String" jdbcType="VARCHAR"
-                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>
-            <columnOverride column="name" javaType="java.lang.String" jdbcType="VARCHAR"
-                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>
-            <columnOverride column="telphone" javaType="java.lang.String" jdbcType="VARCHAR"
-                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>
-            <columnOverride column="email" javaType="java.lang.String" jdbcType="VARCHAR"
-                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>
-            <columnOverride column="password" javaType="java.lang.String" jdbcType="VARCHAR"
-                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>
+            <!--            <columnOverride column="egov_acc" javaType="java.lang.String" jdbcType="VARCHAR"-->
+            <!--                            typeHandler="tw.mike.star.appcore.dbencrypt.EncryptTypeHandler"/>-->
+            <columnOverride column="uid" javaType="java.util.UUID"
+                            typeHandler="tw.mike.star.appcore.handler.UUIDTypeHandler"/>
+            <columnOverride column="role_id" javaType="java.util.UUID"
+                            typeHandler="tw.mike.star.appcore.handler.UUIDTypeHandler"/>
+            <columnOverride column="created_by" javaType="java.util.UUID"
+                            typeHandler="tw.mike.star.appcore.handler.UUIDTypeHandler"/>
+            <columnOverride column="updated_by" javaType="java.util.UUID"
+                            typeHandler="tw.mike.star.appcore.handler.UUIDTypeHandler"/>
         </table>
-        <table tableName="sys_password_log"/>
-        <table tableName="backend_login_log">
-            <columnOverride column="ip_address" javaType="java.lang.String" jdbcType="VARCHAR"
-                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>
-        </table>
-        <table tableName="user_change_log">
-            <columnOverride column="event" javaType="tw.gov.moda.mydata.uma.type.UserChangeEvent" jdbcType="OTHER"
-                            typeHandler="tw.gov.moda.mydata.uma.helper.UserChangeEventHandler"/>
-        </table>
-
-        <!--        <table tableName="verify">-->
-        <!--            <columnOverride column="uid" javaType="java.lang.String" jdbcType="VARCHAR"-->
-        <!--                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>-->
-        <!--        </table>-->
-
-        <!--        <table tableName="portal_resource"/>-->
-        <!--        <table tableName="portal_service"/>-->
-        <!--        <table tableName="group_resource"/>-->
-        <!--        <table tableName="group_service"/>-->
 
         <table tableName="role">
-            <columnOverride column="selected_data_scope" javaType="com.fasterxml.jackson.databind.JsonNode"
-                            typeHandler="com.riease.common.mybatis.type.JsonNodeTypeHandler"/>
-        </table>
-
-        <table tableName="service_modules">
             <columnOverride column="uid" javaType="java.util.UUID"
-                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>
-            <columnOverride column="discovery_content" javaType="com.fasterxml.jackson.databind.JsonNode"
-                            typeHandler="com.riease.common.mybatis.type.JsonNodeTypeHandler"/>
-            <columnOverride column="authorities" javaType="com.fasterxml.jackson.databind.JsonNode"
-                            typeHandler="com.riease.common.mybatis.type.JsonNodeTypeHandler"/>
-        </table>
-        <table tableName="role_authorities">
-            <columnOverride column="uid" javaType="java.util.UUID"
-                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>
-            <columnOverride column="service_modules_uid" javaType="java.util.UUID"
-                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>
-        </table>
-        <table tableName="service_modules_discovery_log">
-            <columnOverride column="uid" javaType="java.util.UUID"
-                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>
-            <columnOverride column="service_modules_uid" javaType="java.util.UUID"
-                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>
-            <columnOverride column="discovery_content" javaType="com.fasterxml.jackson.databind.JsonNode"
-                            typeHandler="com.riease.common.mybatis.type.JsonNodeTypeHandler"/>
+                            typeHandler="tw.mike.star.appcore.handler.UUIDTypeHandler"/>
         </table>
 
-
-        <table tableName="provider_group"/>
-        <table tableName="group_user"/>
-        <table tableName="select_options">
-            <columnOverride column="uid" javaType="java.util.UUID"
-                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>
-        </table>
-
-
-        <table tableName="portal_provider">
-            <columnOverride column="telphone" javaType="java.lang.String" jdbcType="VARCHAR"
-                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>
-            <columnOverride column="email" javaType="java.lang.String" jdbcType="VARCHAR"
-                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>
-            <columnOverride column="egov_acc" javaType="java.lang.String" jdbcType="VARCHAR"
-                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>
-            <columnOverride column="apply_name" javaType="java.lang.String" jdbcType="VARCHAR"
-                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>
-        </table>
-        <!--        <table tableName="portal_resource_scope"/>-->
-        <!--        <table tableName="portal_service_scope"/>-->
-        <!--        <table tableName="portal_counter_sub_scope"/>-->
-        <!--        <table tableName="portal_service_scope_counter"/>-->
-        <table tableName="apply"/>
-        <table tableName="notification"/>
-        <table tableName="apply_email_valid"/>
-
-
-        <table tableName="email_black"/>
-        <table tableName="forget_password"/>
-
-        <!--常用瀏覽器-->
-        <table tableName="user_agent">
-            <columnOverride column="uid" javaType="java.util.UUID"
-                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>
-        </table>
-
-        <!--        <table tableName="portal_show_history"/>-->
-        <!--        <table tableName="portal_resource_show_history"/>-->
-        <!--        <table tableName="portal_service_show_history"/>-->
-
-        <!--        <table tableName="portal_resource_field"/>-->
-        <!--        <table tableName="portal_resource_param"/>-->
-        <!--        <table tableName="portal_resource_maintain"/>-->
-        <!--        <table tableName="portal_resource_category"/>-->
-        <!--        <table tableName="portal_resource_filter"/>-->
-        <!--        <table tableName="white_ip_list"/>-->
-        <!--        <table tableName="portal_service_allow_ip"/>-->
-        <!--        <table tableName="portal_service_stage_ip"/>-->
-        <!--        <table tableName="portal_service_scope"/>-->
-        <!--        <table tableName="portal_service_category"/>-->
-        <!--        <table tableName="portal_service_maintain"/>-->
-        <!--        <table tableName="portal_counter_sub"/>-->
-        <!--        <table tableName="cer_type"/>-->
-
-        <!--        <table tableName="portal_disable_download_dp"/>-->
-        <!--        <table tableName="portal_downloadable_log"/>-->
-        <!--&lt;!&ndash;        <table tableName="portal_downloadable_log_temp"/>&ndash;&gt;-->
-        <!--        <table tableName="auth_token"/>-->
-        <!--        <table tableName="member">-->
-        <!--            <columnOverride column="name" javaType="java.lang.String" jdbcType="VARCHAR"-->
-        <!--                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>-->
-        <!--            <columnOverride column="uid" javaType="java.lang.String" jdbcType="VARCHAR"-->
-        <!--                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>-->
-        <!--            <columnOverride column="email" javaType="java.lang.String" jdbcType="VARCHAR"-->
-        <!--                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>-->
-        <!--            <columnOverride column="mobile" javaType="java.lang.String" jdbcType="VARCHAR"-->
-        <!--                            typeHandler="tw.gov.moda.mydata.uma.dbencrypt.EncryptTypeHandler"/>-->
-        <!--        </table>-->
-        <!--        <table tableName="heartbeat_pr_log"/>-->
-        <!--        <table tableName="heartbeat_pr_log_error"/>-->
-        <!--        <table tableName="backend_log"/>-->
-        <table tableName="role"/>
-        <table tableName="group_resource"/>
-        <table tableName="group_service"/>
-
-        <!--        <table tableName="portal_resource_download"/>-->
-        <!--        <table tableName="portal_service_download"/>-->
-        <!--        <table tableName="heartbeat_pr_log"/>-->
-        <!--        <table tableName="heartbeat_pr_log_error"/>-->
-        <!--        <table tableName="heartbeat_ps_log_error"/>-->
-
-        <!--        <table tableName="portal_resource_maintain_check_temp"/>-->
-        <!--        <table tableName="portal_service_maintain_check_temp"/>-->
-
-        <!--        <table tableName="security_open_fill"/>-->
-        <!--        <table tableName="security_self_assessment_fill"/>-->
-        <!--        <table tableName="security_check_fill"/>-->
-        <!--        <table tableName="security_check_fill_reply"/>-->
-
-        <!--        <table tableName="statistics_db_daily"/>-->
-        <!--        <table tableName="statistics_basic_daily"/>-->
-        <!--        <table tableName="statistics_member_daily"/>-->
-        <!--        <table tableName="member_delete"/>-->
-
-        <!--        <table tableName="log_member_session"/>-->
-        <!--        <table tableName="spring_session"/>-->
-
-        <!--        <table tableName="ulog_api"/>-->
-        <!--        <table tableName="member_log"/>-->
-
-        <!-- 排程  -->
-        <!--        <table tableName="routines">-->
-        <!--            <columnOverride column ="uid" javaType="java.util.UUID"-->
-        <!--                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>-->
-        <!--        </table>-->
-        <!--        <table tableName="routine_logs">-->
-        <!--            <columnOverride column ="uid" javaType="java.util.UUID"-->
-        <!--                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>-->
-        <!--            <columnOverride column ="routine_uid" javaType="java.util.UUID"-->
-        <!--                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>-->
-        <!--        </table>-->
-        <!--        <table tableName="routine_logs_details">-->
-        <!--            <columnOverride column ="uid" javaType="java.util.UUID"-->
-        <!--                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>-->
-        <!--            <columnOverride column ="logs_uid" javaType="java.util.UUID"-->
-        <!--                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>-->
-        <!--            <columnOverride column ="routine_uid" javaType="java.util.UUID"-->
-        <!--                            typeHandler="com.riease.common.mybatis.type.UUIDTypeHandler"/>-->
+        <!--        <table tableName="backend_login_log">-->
+        <!--            <columnOverride column="uid" javaType="java.util.UUID"-->
+        <!--                            typeHandler="tw.mike.star.appcore.handler.UUIDTypeHandler"/>-->
         <!--        </table>-->
 
     </context>

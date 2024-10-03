@@ -73,8 +73,8 @@ mybatis:
     use-column-label: true
     use-generated-keys: false
   executor-type: SIMPLE
-  type-aliases-package: tw.mike.star.entity
-  type-handlers-package: tw.mike.star.handler
+  type-aliases-package: tw.mike.star.appcore.entity
+  type-handlers-package: tw.mike.star.appcore.handler
 spring:
 #  profiles:
 #    active: local
@@ -88,10 +88,10 @@ spring:
       maximum-pool-size: 20
       data-source-properties:
         reWriteBatchedInserts: true
-    url: jdbc:postgresql://192.168.1.214:5432/mydata?timezone=Asia/Taipei
+    url: jdbc:postgresql://localhost:5433/postgres?timezone=Asia/Taipei
     username: postgres
-    password: star123
-#    password: ENC(wIcndmp8z7CL6couIxPb3NkoEgbKayD9ldLWf0p3aGXTRBiJKAE=)
+#    password: star123
+    password: ENC(M4ak8pqiV8sVicHU4XscFE98aWaHTUJ06SrNcQJkAA3sJBY=)
 
   jackson:
     serialization:
@@ -128,7 +128,7 @@ spring:
 jasypt:
   encryptor:
     # ????
-    password: BRzMjmHetYVFIe0xZ1QmzoEdK1y6zNVc
+    password: BzzMjmG1cY7FIe0xZ1QmZo9dS1y6zQ2c
     #  ??????
     string-output-type: base64
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
