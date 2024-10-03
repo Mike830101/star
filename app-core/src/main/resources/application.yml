@@ -1,0 +1,135 @@
+app:
+  idToken:
+    exp: 86400 # ???? 24 ?? (?)
+  accessToken:
+    exp: 86400 # ???? 24 ?? (?)
+    # ????
+  email:
+    enable: true  # ????
+    from: mydata@dev.riease.com #???????
+    # email ????
+    pfx:
+      # ????
+      alias: 1
+      # ????
+      key-store-password: mydatadev9889
+      # ??????
+      enable: true
+      # ????
+      path: ${user.home}/deploy/mydata-resource/keystore/mydata???????/mydata_dev_keystore.p12
+    test: # ????
+      enable: false # ????????(???mailBuilder???????????)
+      to: yyy@riease.com,mmm@riease.com # ???????(??????????)
+  #?????
+  datasource:
+    # ??????
+    hmac-secret-key: ENC(88nr8R0qGJ+wMIMdzRfy2C7eQquiD6lawORh/wz9cwfhRSzESq89alRFz86bZOhil3sNfKeiwlfKFwmBL8Mqw9rVWb1BPeO+)
+    secret:
+      # CBC ??? d3M5ZWdFQWsyUXhsUUZROFRZQTRONk1KTWdOWk1sa1M=
+      base64: ENC(c8loYG0/WeVRVTSPbyj7PRDW01fv1ovj9SWFhweM5UjpQ/Ax3t5nSNIUm9/MLGVgQ0kKeiRpyNg0Ws/f23pbC0ZLMFszReVQ)
+server:
+  port: 8082
+  servlet:
+    application-display-name: star
+    context-path: /star
+    session:
+      cookie:
+        http-only: true
+        secure: true
+        path: /star
+      timeout: 30m  # session ????
+  tomcat:
+    # Maximum queue length for incoming connection requests when all possible request processing threads are in use.
+    accept-count: 200
+    max-http-form-post-size: 200MB # json??????
+  max-http-request-header-size: 256KB
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain,image/jpeg,image/png,image/gif
+#  mail:
+#    default-encoding: UTF-8
+#    host: smtp.mailgun.org
+#    username: postmaster@dev.riease.com
+#    password: ENC(WYLe1ZKWwehd0QFrpSo2+4huxuTvJeM52fck5Op2W1rlJ4ZUgA3aifQ71puwVVJwAtOMDUqIB7h67CgpIiGcWVQbQNCaT/50kBarVnjT)
+#    port: 25
+#    properties:
+#      mail.smtp:
+#        auth: true
+#        starttls:
+#          enable: false
+#          required: false
+#        timeout: 25000
+#        connectiontimeout: 25000
+#        writetimeout: 25000
+#    test-connection: false
+mybatis:
+  configuration:
+    aggressive-lazy-loading: true
+    auto-mapping-behavior: PARTIAL
+    cache-enabled: true
+    default-statement-timeout: 25000
+    lazy-loading-enabled: true
+    log-prefix: dao.
+    use-column-label: true
+    use-generated-keys: false
+  executor-type: SIMPLE
+  type-aliases-package: tw.mike.star.entity
+  type-handlers-package: tw.mike.star.handler
+spring:
+#  profiles:
+#    active: local
+  application:
+    name: star
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      leak-detection-threshold: 5000
+      connection-timeout: 15000
+      maximum-pool-size: 20
+      data-source-properties:
+        reWriteBatchedInserts: true
+    url: jdbc:postgresql://192.168.1.214:5432/mydata?timezone=Asia/Taipei
+    username: postgres
+    password: star123
+#    password: ENC(wIcndmp8z7CL6couIxPb3NkoEgbKayD9ldLWf0p3aGXTRBiJKAE=)
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null # ??null???
+  devtools:
+    restart:
+      enabled: false
+#  mail:
+#    default-encoding: UTF-8
+#    host: smtp.mailgun.org
+#    username: postmaster@dev.riease.com
+#    password: ENC(WYLe1ZKWwehd0QFrpSo2+4huxuTvJeM52fck5Op2W1rlJ4ZUgA3aifQ71puwVVJwAtOMDUqIB7h67CgpIiGcWVQbQNCaT/50kBarVnjT)
+#    port: 25
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: false
+#            required: false
+#          timeout: 25000
+#          connectiontimeout: 25000
+#          writetimeout: 25000
+#    test-connection: false
+  #   [Redis]
+#  data:
+#    redis:
+#      username: myredis
+#      host: 192.168.1.214
+#      port: 6379
+#      password: ENC(lDh5l476tMJ0QUXoGOOG9AwPCbPw+YGhcBzVRT1MLX44mjgWxh0=)
+#      database: 0
+jasypt:
+  encryptor:
+    # ????
+    password: BRzMjmHetYVFIe0xZ1QmzoEdK1y6zNVc
+    #  ??????
+    string-output-type: base64
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    bean: encryptorBean
