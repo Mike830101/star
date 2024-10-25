@@ -5,9 +5,9 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import reactor.core.publisher.Mono
-import tw.gov.nat.mydata.base.BaseReply
-import tw.gov.nat.mydata.base.Paging
-import tw.gov.nat.mydata.type.SysCode
+import tw.mike.star.appcore.utils.BaseReply
+import tw.mike.star.appcore.utils.Paging
+import tw.mike.star.appcore.utils.SysCode
 import tw.mike.star.appcore.utils.logger
 import java.io.IOException
 import java.io.Serializable
@@ -15,9 +15,9 @@ import java.io.Serializable
 /**
  * Base class for all REST controllers.
  */
-class BaseRestController {
+open class BaseRestController {
 
-    private companion object {
+    protected companion object {
         val log = logger()
         val objectMapper: ObjectMapper = ObjectMapper()
     }
@@ -53,6 +53,7 @@ class BaseRestController {
      * @param paging 分頁資訊
      */
     fun ok(body: Any? = null, paging: Paging? = null): Mono<ResponseEntity<*>> {
+        log.debug("ok, body: {}, paging: {}", body, paging)
         return sendMessage(HttpStatus.OK, SysCode.OK, null, body, paging)
     }
 
@@ -90,7 +91,10 @@ class BaseRestController {
         data: Any? = null,
         paging: Paging? = null
     ): Mono<ResponseEntity<*>> {
-        return Mono.just(ResponseEntity.status(httpStatus).body(BaseReply(sysCode, information, data, paging)))
+
+        return Mono.just(ResponseEntity.status(httpStatus).body(BaseReply(sysCode, information, data, paging).apply {
+            log.debug("sendMessage,BaseReply:$this")
+        }))
     }
 
 

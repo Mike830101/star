@@ -20,5 +20,8 @@ data class SysUser(
     var createdBy: UUID? = null,
     var updatedTime: LocalDateTime? = null,
     var updatedBy: UUID? = null,
+    var deleted: Boolean? = null,
+    var deletedTime: LocalDateTime? = null,
+    var deletedBy: UUID? = null,
     var lastLoginTime: LocalDateTime? = null
 ) : Serializable

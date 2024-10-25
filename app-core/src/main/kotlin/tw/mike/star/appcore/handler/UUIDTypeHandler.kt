@@ -18,7 +18,7 @@ import java.util.*
 class UUIDTypeHandler : BaseTypeHandler<UUID?>() {
     @Throws(SQLException::class)
     override fun setNonNullParameter(ps: PreparedStatement, i: Int, parameter: UUID?, jdbcType: JdbcType) {
-        ps.setObject(i, parameter, jdbcType.TYPE_CODE)
+        ps.setObject(i, parameter, java.sql.Types.OTHER)
     }
 
     @Throws(SQLException::class)

@@ -34,6 +34,9 @@ import tw.mike.star.appcore.handler.UUIDTypeHandler
 import tw.mike.star.appcore.mapper.SysUserDynamicSqlSupport.acc
 import tw.mike.star.appcore.mapper.SysUserDynamicSqlSupport.createdBy
 import tw.mike.star.appcore.mapper.SysUserDynamicSqlSupport.createdTime
+import tw.mike.star.appcore.mapper.SysUserDynamicSqlSupport.deleted
+import tw.mike.star.appcore.mapper.SysUserDynamicSqlSupport.deletedBy
+import tw.mike.star.appcore.mapper.SysUserDynamicSqlSupport.deletedTime
 import tw.mike.star.appcore.mapper.SysUserDynamicSqlSupport.email
 import tw.mike.star.appcore.mapper.SysUserDynamicSqlSupport.lastLoginTime
 import tw.mike.star.appcore.mapper.SysUserDynamicSqlSupport.name
@@ -62,6 +65,9 @@ interface SysUserMapper : CommonCountMapper, CommonDeleteMapper, CommonInsertMap
         Result(column="created_by", property="createdBy", typeHandler=UUIDTypeHandler::class, jdbcType=JdbcType.OTHER),
         Result(column="updated_time", property="updatedTime", jdbcType=JdbcType.TIMESTAMP),
         Result(column="updated_by", property="updatedBy", typeHandler=UUIDTypeHandler::class, jdbcType=JdbcType.OTHER),
+        Result(column="deleted", property="deleted", jdbcType=JdbcType.BIT),
+        Result(column="deleted_time", property="deletedTime", jdbcType=JdbcType.TIMESTAMP),
+        Result(column="deleted_by", property="deletedBy", typeHandler=UUIDTypeHandler::class, jdbcType=JdbcType.OTHER),
         Result(column="last_login_time", property="lastLoginTime", jdbcType=JdbcType.TIMESTAMP)
     ])
     fun selectMany(selectStatement: SelectStatementProvider): List<SysUser>
@@ -96,6 +102,9 @@ fun SysUserMapper.insert(row: SysUser) =
         map(createdBy) toProperty "createdBy"
         map(updatedTime) toProperty "updatedTime"
         map(updatedBy) toProperty "updatedBy"
+        map(deleted) toProperty "deleted"
+        map(deletedTime) toProperty "deletedTime"
+        map(deletedBy) toProperty "deletedBy"
         map(lastLoginTime) toProperty "lastLoginTime"
     }
 
@@ -113,6 +122,9 @@ fun SysUserMapper.insertMultiple(records: Collection<SysUser>) =
         map(createdBy) toProperty "createdBy"
         map(updatedTime) toProperty "updatedTime"
         map(updatedBy) toProperty "updatedBy"
+        map(deleted) toProperty "deleted"
+        map(deletedTime) toProperty "deletedTime"
+        map(deletedBy) toProperty "deletedBy"
         map(lastLoginTime) toProperty "lastLoginTime"
     }
 
@@ -133,10 +145,13 @@ fun SysUserMapper.insertSelective(row: SysUser) =
         map(createdBy).toPropertyWhenPresent("createdBy", row::createdBy)
         map(updatedTime).toPropertyWhenPresent("updatedTime", row::updatedTime)
         map(updatedBy).toPropertyWhenPresent("updatedBy", row::updatedBy)
+        map(deleted).toPropertyWhenPresent("deleted", row::deleted)
+        map(deletedTime).toPropertyWhenPresent("deletedTime", row::deletedTime)
+        map(deletedBy).toPropertyWhenPresent("deletedBy", row::deletedBy)
         map(lastLoginTime).toPropertyWhenPresent("lastLoginTime", row::lastLoginTime)
     }
 
-private val columnList = listOf(uid, acc, password, name, telPhone, email, roleId, status, createdTime, createdBy, updatedTime, updatedBy, lastLoginTime)
+private val columnList = listOf(uid, acc, password, name, telPhone, email, roleId, status, createdTime, createdBy, updatedTime, updatedBy, deleted, deletedTime, deletedBy, lastLoginTime)
 
 fun SysUserMapper.selectOne(completer: SelectCompleter) =
     selectOne(this::selectOne, columnList, sysUser, completer)
@@ -169,6 +184,9 @@ fun KotlinUpdateBuilder.updateAllColumns(row: SysUser) =
         set(createdBy) equalToOrNull row::createdBy
         set(updatedTime) equalToOrNull row::updatedTime
         set(updatedBy) equalToOrNull row::updatedBy
+        set(deleted) equalToOrNull row::deleted
+        set(deletedTime) equalToOrNull row::deletedTime
+        set(deletedBy) equalToOrNull row::deletedBy
         set(lastLoginTime) equalToOrNull row::lastLoginTime
     }
 
@@ -186,6 +204,9 @@ fun KotlinUpdateBuilder.updateSelectiveColumns(row: SysUser) =
         set(createdBy) equalToWhenPresent row::createdBy
         set(updatedTime) equalToWhenPresent row::updatedTime
         set(updatedBy) equalToWhenPresent row::updatedBy
+        set(deleted) equalToWhenPresent row::deleted
+        set(deletedTime) equalToWhenPresent row::deletedTime
+        set(deletedBy) equalToWhenPresent row::deletedBy
         set(lastLoginTime) equalToWhenPresent row::lastLoginTime
     }
 
@@ -202,6 +223,9 @@ fun SysUserMapper.updateByPrimaryKey(row: SysUser) =
         set(createdBy) equalToOrNull row::createdBy
         set(updatedTime) equalToOrNull row::updatedTime
         set(updatedBy) equalToOrNull row::updatedBy
+        set(deleted) equalToOrNull row::deleted
+        set(deletedTime) equalToOrNull row::deletedTime
+        set(deletedBy) equalToOrNull row::deletedBy
         set(lastLoginTime) equalToOrNull row::lastLoginTime
         where { uid isEqualTo row.uid!! }
     }
@@ -219,6 +243,9 @@ fun SysUserMapper.updateByPrimaryKeySelective(row: SysUser) =
         set(createdBy) equalToWhenPresent row::createdBy
         set(updatedTime) equalToWhenPresent row::updatedTime
         set(updatedBy) equalToWhenPresent row::updatedBy
+        set(deleted) equalToWhenPresent row::deleted
+        set(deletedTime) equalToWhenPresent row::deletedTime
+        set(deletedBy) equalToWhenPresent row::deletedBy
         set(lastLoginTime) equalToWhenPresent row::lastLoginTime
         where { uid isEqualTo row.uid!! }
     }

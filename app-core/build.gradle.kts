@@ -26,16 +26,19 @@ repositories {
 
 dependencies {
     //外部jar引用
-    implementation(fileTree("libs"))
+//    implementation(fileTree("libs"))
 
     //spring boot
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-security")
+//    implementation("org.springframework.boot:spring-boot-starter-security")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    //validation
+    implementation("jakarta.validation:jakarta.validation-api:3.1.0")
 
     // encryption: bouncy castle, jasypt
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")

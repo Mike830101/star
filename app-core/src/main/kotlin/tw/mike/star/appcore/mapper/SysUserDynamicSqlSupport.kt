@@ -36,6 +36,12 @@ object SysUserDynamicSqlSupport {
 
     val updatedBy = sysUser.updatedBy
 
+    val deleted = sysUser.deleted
+
+    val deletedTime = sysUser.deletedTime
+
+    val deletedBy = sysUser.deletedBy
+
     val lastLoginTime = sysUser.lastLoginTime
 
     class SysUser : AliasableSqlTable<SysUser>("sys_user", ::SysUser) {
@@ -62,6 +68,12 @@ object SysUserDynamicSqlSupport {
         val updatedTime = column<LocalDateTime>(name = "updated_time", jdbcType = JDBCType.TIMESTAMP)
 
         val updatedBy = column<UUID>(name = "updated_by", jdbcType = JDBCType.OTHER, typeHandler = "tw.mike.star.appcore.handler.UUIDTypeHandler")
+
+        val deleted = column<Boolean>(name = "deleted", jdbcType = JDBCType.BIT)
+
+        val deletedTime = column<LocalDateTime>(name = "deleted_time", jdbcType = JDBCType.TIMESTAMP)
+
+        val deletedBy = column<UUID>(name = "deleted_by", jdbcType = JDBCType.OTHER, typeHandler = "tw.mike.star.appcore.handler.UUIDTypeHandler")
 
         val lastLoginTime = column<LocalDateTime>(name = "last_login_time", jdbcType = JDBCType.TIMESTAMP)
     }

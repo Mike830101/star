@@ -30,8 +30,8 @@ mybatis:
   type-aliases-package: tw.mike.star.appcore.entity
   type-handlers-package: tw.mike.star.appcore.handler
 spring:
-  #  profiles:
-  #    active: local
+#  profiles:
+#    active: local
   application:
     name: star
   datasource:

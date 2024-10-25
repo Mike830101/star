@@ -80,6 +80,8 @@
                             typeHandler="tw.mike.star.appcore.handler.UUIDTypeHandler"/>
             <columnOverride column="updated_by" javaType="java.util.UUID"
                             typeHandler="tw.mike.star.appcore.handler.UUIDTypeHandler"/>
+            <columnOverride column="deleted_by" javaType="java.util.UUID"
+                            typeHandler="tw.mike.star.appcore.handler.UUIDTypeHandler"/>
         </table>
 
         <table tableName="role">
