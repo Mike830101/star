@@ -102,15 +102,15 @@ open class BaseRestController {
     /**
      * 回覆 http 400 及錯誤代碼及訊息。
      */
-    fun badRequest(response: HttpServletResponse, sysCode: SysCode, information: String?, data: Any?) {
-        sendError(response, HttpStatus.BAD_REQUEST, sysCode, information, data)
+    fun badRequest(response: HttpServletResponse, sysCode: SysCode, information: String? = null, data: Any? = null) {
+        sendJsonMessage(response, HttpStatus.BAD_REQUEST, sysCode, information, data)
     }
 
     /**
      * 回覆 http 500 及錯誤代碼及訊息。
      */
-    fun serverError(response: HttpServletResponse, sysCode: SysCode, information: String?, data: Any?) {
-        sendError(response, HttpStatus.INTERNAL_SERVER_ERROR, sysCode, information, data)
+    fun serverError(response: HttpServletResponse, sysCode: SysCode, information: String? = null, data: Any? = null) {
+        sendJsonMessage(response, HttpStatus.INTERNAL_SERVER_ERROR, sysCode, information, data)
     }
 
     /**
@@ -122,12 +122,12 @@ open class BaseRestController {
      * @param information 回覆訊息(null時採用sysCode的訊息)
      * @param data 輸出資料
      */
-    private fun sendError(
+    fun sendJsonMessage(
         response: HttpServletResponse,
         httpStatus: HttpStatus,
         sysCode: SysCode,
-        information: String?,
-        data: Any?
+        information: String? = null,
+        data: Any? = null
     ) {
         val dataMap: MutableMap<String, Serializable> = HashMap()
         dataMap["code"] = sysCode.code

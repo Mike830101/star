@@ -1,6 +1,7 @@
 package tw.mike.star.appcore.service.impl
 
 import lombok.AllArgsConstructor
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.mybatis.dynamic.sql.util.kotlin.GroupingCriteriaCollector.Companion.where
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -8,6 +9,7 @@ import tw.mike.star.appcore.entity.Role
 import tw.mike.star.appcore.entity.SysUser
 import tw.mike.star.appcore.exception.AuthException
 import tw.mike.star.appcore.exception.UserException
+import tw.mike.star.appcore.helper.ExcelHelper
 import tw.mike.star.appcore.mapper.*
 import tw.mike.star.appcore.mapper.ext.UserMapperExt
 import tw.mike.star.appcore.model.user.*
@@ -28,32 +30,20 @@ class UserServiceImpl @Autowired constructor(
     private val userMapperExt: UserMapperExt,
     private val userRepository: UserRepository,
     private val roleRepository: RoleRepository,
-    private val userMapper: SysUserMapper
+    private val userMapper: SysUserMapper,
+    private val excelHelper: ExcelHelper
 ) : UserService, BaseService() {
 
     /**
      * 帳號-查詢單筆。
      * @param uid 賬號鍵值
      * @exception UserException 查無此帳號
-     *                          找不到對應的角色
      */
     override fun getUser(uid: UUID): UserGetResp {
         val tag = "getUser"
         log.debug("$tag,uid:$uid")
 
-        return userMapperExt.findByUid(uid)
-//        val user:SysUser = userRepository.findByUid(uid)?: throw UserException("查無此帳號")
-//        val role:Role = roleRepository.findByUid(user.roleId!!,null)?: throw UserException("找不到對應的角色")
-//
-//        return UserGetResp(roleId = role.uid!!, roleCode = role.code!!, roleName = role.name!!, account = user.acc!!,
-//            password = user.password!!, status = user.status!!, uid = user.uid!!).apply {
-//            name = user.name!!
-//            telPhone = user.telPhone
-//            email = user.email
-//            updatedBy = user.updatedBy
-//            updatedUserName = user.name
-//            updatedTime = user.updatedTime
-//        }
+        return userMapperExt.findByUid(uid)?: throw UserException("查無此帳號")
     }
 
     /**
@@ -201,14 +191,14 @@ class UserServiceImpl @Autowired constructor(
 
         //整合回傳的資料
         val respList:List<UserListResp> = userList.map {
-            UserListResp(
-                id = it.roleId!!,
-                account = it.acc!!,
-                name = it.name!!,
-                roleName = roleNameMap[it.roleId]!!,
-                status = it.status!!,
-                lastLoginTime = it.lastLoginTime,
-            )
+            UserListResp().apply {
+                uid = it.roleId!!
+                account = it.acc!!
+                name = it.name!!
+                roleName = roleNameMap[it.roleId]!!
+                status = it.status!!
+                lastLoginTime = it.lastLoginTime
+            }
         }
 
         //設定總頁數
@@ -222,7 +212,12 @@ class UserServiceImpl @Autowired constructor(
     /**
      * 帳號-查詢多筆並匯出excel。
      */
-    override fun exportUserList(req: UserListReq): List<UserListResp> {
-        TODO("Not yet implemented")
+    override fun exportUserList(req: UserListReq): XSSFWorkbook {
+        val tag = "exportUserList"
+        log.debug("$tag,req:$req")
+
+        val replyList:List<UserListResp> = userMapperExt.searchUserList(req.account,req.name,req.roleId,req.status)
+
+        return excelHelper.exportUserList(replyList)
     }
 }

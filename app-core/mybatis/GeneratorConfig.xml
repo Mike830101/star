@@ -70,8 +70,6 @@
 
 
         <table tableName="sys_user">
-            <!--            <columnOverride column="egov_acc" javaType="java.lang.String" jdbcType="VARCHAR"-->
-            <!--                            typeHandler="tw.mike.star.appcore.dbencrypt.EncryptTypeHandler"/>-->
             <columnOverride column="uid" javaType="java.util.UUID"
                             typeHandler="tw.mike.star.appcore.handler.UUIDTypeHandler"/>
             <columnOverride column="role_id" javaType="java.util.UUID"

@@ -37,6 +37,10 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
+    // poi excel匯出
+    implementation("org.apache.poi:poi:5.3.0")
+    implementation("org.apache.poi:poi-ooxml:5.3.0")
+
     //validation
     implementation("jakarta.validation:jakarta.validation-api:3.1.0")
 

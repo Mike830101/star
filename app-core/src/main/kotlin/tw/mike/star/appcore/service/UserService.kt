@@ -1,5 +1,6 @@
 package tw.mike.star.appcore.service
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import tw.mike.star.appcore.model.user.*
 import tw.mike.star.appcore.utils.Paging
 import tw.mike.star.appcore.utils.UUIdSimpleResp
@@ -43,5 +44,5 @@ interface UserService{
     /**
      * 帳號-查詢多筆並匯出excel。
      */
-    fun exportUserList(req: UserListReq): List<UserListResp>
+    fun exportUserList(req: UserListReq): XSSFWorkbook
 }

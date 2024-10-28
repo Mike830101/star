@@ -175,12 +175,12 @@ data class UserUpdateReq(
  */
 data class UserListReq(
     /**
-     * 帳號。不支援模糊搜尋。
+     * 帳號。支援模糊搜尋。
      */
     val account: String?,
 
     /**
-     * 姓名。不支援模糊搜尋。
+     * 姓名。支援模糊搜尋。
      */
     val name: String?,
 
@@ -198,34 +198,34 @@ data class UserListReq(
 /**
  * 主帳號列表查詢，回應內容
  */
-data class UserListResp(
+class UserListResp{
     /**
      * 鍵值
      */
-    val id: UUID,
+    lateinit var uid: UUID
 
     /**
      * 帳號
      */
-    val account: String,
+    lateinit var account: String
 
     /**
      * 姓名
      */
-    val name: String,
+    lateinit var name: String
 
     /**
      * 角色名稱
      */
-    val roleName: String,
+    lateinit var roleName: String
 
     /**
      * 狀態。停用0、啟用1。
      */
-    val status: Int,
+    var status: Int = 0
 
     /**
      * 最後登入時間
      */
-    val lastLoginTime: LocalDateTime?
-)
+    var lastLoginTime: LocalDateTime? = null
+}
