@@ -13,35 +13,37 @@ data class UserCreateReq(
     /**
      * 角色鍵值
      */
-    @NotBlank
     val roleId: UUID,
 
     /**
      * 帳號
      */
-    @NotBlank
+    @field:NotBlank(message = "帳號不可為空")
     val account: String,
 
     /**
      * 密碼
      */
-    @NotBlank
+    @field:NotBlank(message = "密碼不可為空")
     val password: String,
 
     /**
      * 姓名
      */
+    @field:NotBlank(message = "姓名不可為空")
     var name: String?,
 
     /**
      * 電話
      */
+    @field:NotBlank(message = "電話不可為空")
     var telPhone: String?,
 
     /**
      * 電子郵件
      */
-    @Email
+    @field:Email(message = "電子郵件格式錯誤")
+    @field:NotBlank(message = "電子郵件不可為空")
     var email: String?,
 
     /**
@@ -141,17 +143,20 @@ data class UserUpdateReq(
     /**
      * 姓名
      */
+    @field:NotBlank(message = "姓名不可為空")
     val name: String?,
 
     /**
      * 電話
      */
+    @field:NotBlank(message = "電話不可為空")
     val telPhone: String?,
 
     /**
      * 電子郵件
      */
-    @Email
+    @field:Email(message = "電子郵件格式錯誤")
+    @field:NotBlank(message = "電子郵件不可為空")
     val email: String?,
 
     /**
@@ -167,6 +172,7 @@ data class UserUpdateReq(
     /**
      * 密碼
      */
+    @field:NotBlank(message = "密碼不可為空")
     val password: String?
 )
 

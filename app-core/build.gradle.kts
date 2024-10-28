@@ -41,8 +41,10 @@ dependencies {
     implementation("org.apache.poi:poi:5.3.0")
     implementation("org.apache.poi:poi-ooxml:5.3.0")
 
-    //validation
+    //valid
     implementation("jakarta.validation:jakarta.validation-api:3.1.0")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+
 
     // encryption: bouncy castle, jasypt
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
