@@ -29,6 +29,15 @@ infix fun <T> T?.ifNotNull(block: (T) -> Unit): T? {
 }
 
 /**
+ * 在集合不為空時，執行block方法
+ * @param block function
+ * @sample listOf(1,2,3).ifNotEmpty{ println(it) }
+ */
+inline fun <R:Collection<*>> R.ifNotEmpty(block: (R) -> Unit) {
+    if (!isEmpty()) block(this)
+}
+
+/**
  * 字串中文編碼
  */
 fun String.encode(): String {
