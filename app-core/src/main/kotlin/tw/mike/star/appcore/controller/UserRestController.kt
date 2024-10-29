@@ -101,7 +101,7 @@ class UserRestController @Autowired constructor(
      * 帳號-刪除單筆。供管理員刪除主帳號。
      * 刪除時標記為已刪除，但資料仍保存於資料庫中。
      */
-    @PostMapping("/remove")
+    @GetMapping("/remove")
     private fun removeUser(@RequestParam(name = "uid", required = true) uid:UUID): Mono<*> {
         val tag = "removeUser"
         log.debug("{},uid:{}", tag, uid)
