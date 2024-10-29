@@ -9,12 +9,11 @@ import java.util.*
 /**
  * 帳號管理API
  */
-
 interface UserService{
 
     /**
      * 帳號-查詢單筆。
-     * @param uid 賬號鍵值
+     * @param uid 帳號鍵值
      */
     fun getUser(uid: UUID): UserGetResp
 
@@ -31,7 +30,7 @@ interface UserService{
     /**
      * 帳號-刪除單筆。供管理員刪除主帳號。
      * 刪除時標記為已刪除，但資料仍保存於資料庫中。
-     * @param uid 賬號鍵值
+     * @param uid 帳號鍵值
      */
     fun removeUser(uid: UUID): UUIdSimpleResp
 

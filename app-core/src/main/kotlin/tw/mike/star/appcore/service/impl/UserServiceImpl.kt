@@ -80,12 +80,12 @@ class UserServiceImpl @Autowired constructor(
             roleRepository.findByUid(req.roleId)?: throw UserException("查無此角色")
             // 檢查帳號
             userRepository.findByAccount(req.account,null) ifNotNull {throw UserException("帳號已被使用")}
-        }
 
-        if (userRepository.insertSelective(insertUser)){
-            return UUIdSimpleResp(insertUser.uid!!,insertUser.acc)
-        }else{
-            throw UserException("新增資料庫失敗")
+            if (userRepository.insertSelective(insertUser)){
+                return UUIdSimpleResp(insertUser.uid!!,insertUser.acc)
+            }else{
+                throw UserException("新增資料庫失敗")
+            }
         }
     }
 

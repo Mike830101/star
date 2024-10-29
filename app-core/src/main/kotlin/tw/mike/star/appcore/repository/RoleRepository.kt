@@ -3,10 +3,7 @@ package tw.mike.star.appcore.repository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import tw.mike.star.appcore.entity.Role
-import tw.mike.star.appcore.mapper.RoleDynamicSqlSupport
-import tw.mike.star.appcore.mapper.RoleMapper
-import tw.mike.star.appcore.mapper.select
-import tw.mike.star.appcore.mapper.selectOne
+import tw.mike.star.appcore.mapper.*
 import java.util.UUID
 
 /**
@@ -16,6 +13,18 @@ import java.util.UUID
 class RoleRepository @Autowired constructor(
     private val roeMapper:RoleMapper
 ):BaseRepository(){
+
+    /**
+     * 依名稱or代碼 搜尋清單
+     * @param name 角色名稱
+     * @param code 角色代碼
+     */
+    fun findByNameOrCode(name:String,code:String):List<Role> = roeMapper.select {
+        where {
+            RoleDynamicSqlSupport.role.name isEqualTo name
+            or { RoleDynamicSqlSupport.role.code isEqualTo code }
+        }
+    }
 
     /**
      * 依健值單筆搜尋
@@ -43,4 +52,23 @@ class RoleRepository @Autowired constructor(
             }
         }
     }
+
+    /**
+     * 角色創建
+     * @param role 角色
+     */
+    fun insertSelective(role:Role) = roeMapper.insertSelective(role) == 1
+
+
+    /**
+     * 更新角色
+     * @param role 角色資訊 (null值不更新)
+     */
+    fun updateByPrimaryKeySelective(role:Role) = roeMapper.updateByPrimaryKeySelective(role) == 1
+
+    /**
+     * 角色刪除
+     * @param uid 角色健值
+     */
+    fun removeByUid(uid:UUID) = roeMapper.deleteByPrimaryKey(uid) == 1
 }

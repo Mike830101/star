@@ -36,6 +36,23 @@ class UserRepository @Autowired constructor(
     }
 
     /**
+     * 依角色健值做搜尋
+     * @param roleUid 角色健值
+     * @param enable 是否為啟用 (預設true)
+     */
+    fun findByRoleUid(roleUid:UUID, enable:Boolean? = true):List<SysUser>{
+        return userMapper.select {
+            join(RoleDynamicSqlSupport.role){
+                on(SysUserDynamicSqlSupport.roleId) equalTo RoleDynamicSqlSupport.uid
+            }
+            where {
+                SysUserDynamicSqlSupport.roleId isEqualTo roleUid
+                and { RoleDynamicSqlSupport.role.enable isEqualToWhenPresent enable}
+            }
+        }
+    }
+
+    /**
      * 帳號創建
      * @param user 帳號資訊
      */
