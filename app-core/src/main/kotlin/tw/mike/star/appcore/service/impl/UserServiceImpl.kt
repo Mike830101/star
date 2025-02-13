@@ -103,9 +103,11 @@ class UserServiceImpl @Autowired constructor(
         val idToken = getIdToken()?: throw AuthException("無登入資訊")
 
         // 檢查帳號
-        val oldUser = userRepository.findByUid(req.uid)?: throw UserException("查無此帳號")
+        val oldUser = userRepository.findByUid(req.uid,null)?: throw UserException("查無此帳號")
         // 檢查角色
-        roleRepository.findByUid(req.roleId)?: throw UserException("查無此角色")
+        req.roleId?.apply {
+            roleRepository.findByUid(req.roleId)?: throw UserException("查無此角色")
+        }
 
         val updateUser = oldUser.apply {
             uid = req.uid
@@ -192,7 +194,7 @@ class UserServiceImpl @Autowired constructor(
         //整合回傳的資料
         val respList:List<UserListResp> = userList.map {
             UserListResp().apply {
-                uid = it.roleId!!
+                uid = it.uid!!
                 account = it.acc!!
                 name = it.name!!
                 roleName = roleNameMap[it.roleId]!!

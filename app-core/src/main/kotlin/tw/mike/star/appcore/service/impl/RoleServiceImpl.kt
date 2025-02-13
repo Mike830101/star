@@ -85,7 +85,7 @@ class RoleServiceImpl @Autowired constructor(
      */
     override fun updateRole(req: RoleUpdateReq): UUIdSimpleResp {
         val tag = "updateRole"
-        val oldRole = roleRepository.findByUid(req.uid)?: throw RoleException("查無此角色")
+        val oldRole = roleRepository.findByUid(req.uid,null)?: throw RoleException("查無此角色")
 
         val updateRole = Role().apply {
             uid = oldRole.uid

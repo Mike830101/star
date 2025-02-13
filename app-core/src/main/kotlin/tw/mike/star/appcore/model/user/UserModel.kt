@@ -3,6 +3,7 @@ package tw.mike.star.appcore.model.user
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.NotBlank
+import tw.mike.star.appcore.utils.StringNotBlank
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -143,36 +144,36 @@ data class UserUpdateReq(
     /**
      * 姓名
      */
-    @field:NotBlank(message = "姓名不可為空")
+    @field:StringNotBlank(message = "姓名不可為空")
     val name: String?,
 
     /**
      * 電話
      */
-    @field:NotBlank(message = "電話不可為空")
+    @field:StringNotBlank(message = "電話不可為空")
     val telPhone: String?,
 
     /**
      * 電子郵件
      */
     @field:Email(message = "電子郵件格式錯誤")
-    @field:NotBlank(message = "電子郵件不可為空")
+    @field:StringNotBlank(message = "電子郵件不可為空")
     val email: String?,
 
     /**
      * 狀態。停用0、啟用1。
      */
-    val status: Int,
+    val status: Int?,
 
     /**
      * 角色鍵值
      */
-    val roleId: UUID,
+    val roleId: UUID?,
 
     /**
      * 密碼
      */
-    @field:NotBlank(message = "密碼不可為空")
+    @field:StringNotBlank(message = "密碼不可為空")
     val password: String?
 )
 

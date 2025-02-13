@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import tw.mike.star.appcore.dbencrypt.AesGcmStringEncryptor
 
+/**
+ * application 設定檔內文解密
+ * ENC()
+ */
 @Configuration
 class JasyptConfig(
   @Value("\${jasypt.encryptor.password}") private val pd: String
