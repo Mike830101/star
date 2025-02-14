@@ -1,3 +1,8 @@
+app:
+  jwt:
+    secret: 0191eb1feacf719c898518c598134bba4ac6dead4464943885810c7d3938c26 # JWT 用於簽名和驗證
+#    expiration: 86400 # JWT token 的過期時間，以秒為單位（這裡設置為 24 小時）
+    expiration: 1800
 server:
   port: 8082
   servlet:
@@ -62,3 +67,6 @@ jasypt:
     string-output-type: base64
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
     bean: encryptorBean
+logging:
+  level:
+    org.springframework.security: debug
