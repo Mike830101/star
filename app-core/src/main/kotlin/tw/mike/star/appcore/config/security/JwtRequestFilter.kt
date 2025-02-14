@@ -46,11 +46,12 @@ class JwtRequestFilter(
         }catch (e: ExpiredJwtException){
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Token is expired")
             log.error("jwt 驗證異常: token is expired")
+            return
         }catch (e:Exception){
             e.printStackTrace()
             log.error("jwt 驗證異常: ${e.message}")
         }
 
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response)
     }
 }

@@ -1,8 +1,11 @@
 package tw.mike.star.appcore.controller
 
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpSession
 import jakarta.validation.Valid
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
@@ -11,6 +14,7 @@ import tw.mike.star.appcore.repository.UserRepository
 import tw.mike.star.appcore.service.JwtService
 import tw.mike.star.appcore.utils.SysCode
 
+
 @RestController
 @RequestMapping("/api/auth/v1")
 class AuthRestController(
@@ -18,12 +22,12 @@ class AuthRestController(
     private val jwtService: JwtService,
     private val authenticationManager: AuthenticationManager,
 ): BaseRestController() {
+
     /**
-     * MD-1-Role-Create
      * 登入
      */
     @PostMapping("/login")
-    fun createRole(@Valid @RequestBody req: LoginReq): Mono<*> {
+    fun login(@Valid @RequestBody req: LoginReq): Mono<*> {
         val tag = "login"
         log.debug("{},req:{}", tag, req)
         try {
@@ -41,5 +45,21 @@ class AuthRestController(
             e.printStackTrace()
             return badRequest(SysCode._3)
         }
+    }
+
+    /**
+     * 登出
+     */
+    @GetMapping("/logout")
+    fun logout(request: HttpServletRequest?): Mono<*> {
+        val tag = "logout"
+        log.debug("{},request:{}", tag, request)
+
+        // 清除 SecurityContext 中的認證信息
+        SecurityContextHolder.clearContext()
+
+        // 如果使用了 session，可以使其無效
+         request?.getSession(false)?.invalidate()
+        return ok()
     }
 }
