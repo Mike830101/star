@@ -1,0 +1,562 @@
+{
+	"info": {
+		"_postman_id": "93868d02-640b-4e8e-87b3-e43939cef90e",
+		"name": "star",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21122443"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "getUser - 單筆查詢",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/v1?uid=90647edf-e9cc-11ef-a30a-7872643982d0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "uid",
+									"value": "90647edf-e9cc-11ef-a30a-7872643982d0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser - 建立帳號",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//   {\r\n//     \"roleId\": \"78a7fdcb-960a-411f-8041-6e288eaf2be0\",\r\n//     \"account\": \"user123\",\r\n//     \"password\": \"1234!\",\r\n//     \"name\": \"王小明\",\r\n//     \"telPhone\": \"0912345678\",\r\n//     \"email\": \"xiaoming.wang@example.com\",\r\n//     \"status\": 1\r\n//   }\r\n  {\r\n    \"roleId\": \"1c1126d5-25ed-402b-9ebe-3a7705e09588\",\r\n    \"account\": \"test123\",\r\n    \"password\": \"1234!\",\r\n    \"name\": \"陳美麗\",\r\n    \"telPhone\": \"0987654321\",\r\n    \"email\": \"meili.chen@example.com\",\r\n    \"status\": 0\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/v1/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"v1",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove - 刪除帳號",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/v1/remove?uid",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"v1",
+								"remove"
+							],
+							"query": [
+								{
+									"key": "uid",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list - 多筆查詢",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    // \"roleId\": \"1c1126d5-25ed-402b-9ebe-3a7705e09588\",\r\n//     \"roleId\": \"78a7fdcb-960a-411f-8041-6e288eaf2be0\",\r\n//     \"account\": \"user123\",\r\n    // \"account\": \"test123\",\r\n    // \"name\": \"陳美麗\",\r\n    // \"status\": 0\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/v1/list?limit=5&offset=0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"v1",
+								"list"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser - 更新帳號",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//   {\r\n//     \"uid\":\"90647edf-e9cc-11ef-a30a-7872643982d0\",\r\n//     \"roleId\": \"78a7fdcb-960a-411f-8041-6e288eaf2be0\",\r\n//     \"account\": \"user123\",\r\n//     \"password\": \"1234!\",\r\n//     \"name\": \"王小明\",\r\n//     \"telPhone\": \"0912345678\",\r\n//     \"email\": \"xiaoming.wang@example.com\",\r\n//     \"status\": 1\r\n//   }\r\n  {\r\n    \"uid\":\"96ed2a02-e9cc-11ef-a30a-7872643982d0\",\r\n    // \"roleId\": \"1c1126d5-25ed-402b-9ebe-3a7705e09588\",\r\n    // \"account\": \"test123\",\r\n    // \"password\": \"1234!\",\r\n    // \"name\": \"陳美麗\",\r\n    // \"telPhone\": \"0987654321\",\r\n    // \"email\": \"meili.chen@example.com\",\r\n    \"status\": 1\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/v1/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"v1",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "role",
+			"item": [
+				{
+					"name": "getRole - 單筆查詢",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/role/v1?uid=78a7fdcb-960a-411f-8041-6e288eaf2be0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "uid",
+									"value": "78a7fdcb-960a-411f-8041-6e288eaf2be0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove - 刪除刪除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/role/v1/remove?uid=e2a29026-e9bd-11ef-b49d-7872643982d0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"v1",
+								"remove"
+							],
+							"query": [
+								{
+									"key": "uid",
+									"value": "e2a29026-e9bd-11ef-b49d-7872643982d0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create - 建立腳色",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\r\n//     \"code\": \"Admin\",\r\n//     \"name\": \"Administrator\",\r\n//     \"memo\": \"Has full access to the system\",\r\n//     \"enabled\": true\r\n// }\r\n  {\r\n    \"code\": \"user\",\r\n    \"name\": \"Regular User\",\r\n    \"memo\": \"Can access limited resources\",\r\n    \"enabled\": false\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/role/v1/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"v1",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update - 更新腳色",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\r\n//     \"uid\": \"1c1126d5-25ed-402b-9ebe-3a7705e09588\",\r\n//     \"code\": \"Admin\",\r\n//     \"name\": \"Administrator\",\r\n//     \"memo\": \"Has full access to the system\",\r\n//     \"enabled\": true\r\n// }\r\n  {\r\n    \"uid\": \"78a7fdcb-960a-411f-8041-6e288eaf2be0\",\r\n    \"code\": \"user\",\r\n    \"name\": \"Regular User\",\r\n    \"memo\": \"Can access limited resources\",\r\n    \"enabled\": true\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/role/v1/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"v1",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list - 多筆查詢",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    // \"name\": \"Regular User\"\r\n    // ,\r\n    \"enabled\": true\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/role/v1/list?limit=5&offset=0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"v1",
+								"list"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list - 多筆查詢 Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    // \"name\": \"Regular User\"\r\n    // ,\r\n    \"enabled\": true\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/role/v1/list?limit=5&offset=0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"v1",
+								"list"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"acc\": \"admin123\",\r\n    \"pwd\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/v1/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout 登出",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/v1/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"v1",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
