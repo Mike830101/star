@@ -1,12 +1,11 @@
 package tw.mike.star.appcore
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import tw.mike.star.appcore.mapper.*
 import kotlin.test.Test
 
 @SpringBootTest
-class DBConnectTest @Autowired constructor(
+class DBConnectTest(
     private val sysUserMapper: SysUserMapper,
     private val roleMapper: RoleMapper
 ) {

@@ -1,7 +1,6 @@
 package tw.mike.star.appcore.controller
 
 import jakarta.validation.Valid
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
 import tw.mike.star.appcore.exception.RoleException
@@ -14,7 +13,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/api/role/v1")
-class RoleRestController @Autowired constructor(
+class RoleRestController(
     private val roleService: RoleService
 ): BaseRestController() {
 

@@ -3,7 +3,6 @@ package tw.mike.star.appcore.service.impl
 import lombok.AllArgsConstructor
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.mybatis.dynamic.sql.util.kotlin.GroupingCriteriaCollector.Companion.where
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import tw.mike.star.appcore.entity.Role
 import tw.mike.star.appcore.entity.SysUser
@@ -26,7 +25,7 @@ import java.util.*
  */
 @Service
 @AllArgsConstructor
-class UserServiceImpl @Autowired constructor(
+class UserServiceImpl(
     private val userMapperExt: UserMapperExt,
     private val userRepository: UserRepository,
     private val roleRepository: RoleRepository,

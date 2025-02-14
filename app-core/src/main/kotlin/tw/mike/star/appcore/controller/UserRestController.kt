@@ -2,9 +2,7 @@ package tw.mike.star.appcore.controller
 
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
-import lombok.AllArgsConstructor
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
@@ -29,9 +27,8 @@ import java.util.*
  * MD-3-User 帳號相關API
  */
 @RestController
-@AllArgsConstructor
 @RequestMapping("/api/user/v1")
-class UserRestController @Autowired constructor(
+class UserRestController(
     private val userService: UserService
 ): BaseRestController() {
 
@@ -132,8 +129,10 @@ class UserRestController @Autowired constructor(
         try {
             val paging = Paging(limit, offset)
             val resp = userService.searchUserList(req,paging)
+            log.info("{},resp:{}", tag, resp)
             return ok(resp,paging)
         }catch (e: Exception) {
+            e.printStackTrace()
             return badRequest(SysCode._3)
         }
     }

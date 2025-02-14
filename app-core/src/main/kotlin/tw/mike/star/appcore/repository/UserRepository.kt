@@ -1,13 +1,12 @@
 package tw.mike.star.appcore.repository
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import tw.mike.star.appcore.entity.SysUser
 import tw.mike.star.appcore.mapper.*
 import java.util.UUID
 
 @Repository
-class UserRepository @Autowired constructor(
+class UserRepository(
     private val userMapper: SysUserMapper
 ):BaseRepository(){
 

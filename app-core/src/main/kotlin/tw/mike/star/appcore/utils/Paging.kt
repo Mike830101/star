@@ -6,4 +6,4 @@ package tw.mike.star.appcore.utils
  * @param offset 跳過比數
  * @param total 總數量
  */
-class Paging(var limit: Long?,var offset:Long?, var total: Long = 0)
+data class Paging(var limit: Long?,var offset:Long?, var total: Long = 0)

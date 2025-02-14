@@ -1,7 +1,6 @@
 package tw.mike.star.appcore.service.impl
 
 import org.mybatis.dynamic.sql.util.kotlin.GroupingCriteriaCollector.Companion.where
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import tw.mike.star.appcore.entity.Role
 import tw.mike.star.appcore.exception.RoleException
@@ -17,7 +16,7 @@ import tw.mike.star.appcore.utils.ifNotEmpty
 import java.util.*
 
 @Service
-class RoleServiceImpl @Autowired constructor(
+class RoleServiceImpl(
     private val userRepository: UserRepository,
     private val roleRepository: RoleRepository,
     private val roleMapper: RoleMapper,

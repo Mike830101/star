@@ -1,6 +1,5 @@
 package tw.mike.star.appcore.repository
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import tw.mike.star.appcore.entity.Role
 import tw.mike.star.appcore.mapper.*
@@ -10,7 +9,7 @@ import java.util.UUID
  * 角色
  */
 @Repository
-class RoleRepository @Autowired constructor(
+class RoleRepository(
     private val roeMapper:RoleMapper
 ):BaseRepository(){
 
