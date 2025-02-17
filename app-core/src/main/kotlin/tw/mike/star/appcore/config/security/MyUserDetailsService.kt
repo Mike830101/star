@@ -27,7 +27,7 @@ class MyUserDetailsService(
     }
 }
 
-class MyUserDetails(private val user: SysUser,private val role: Role): UserDetails{
+class MyUserDetails(val user: SysUser,val role: Role): UserDetails{
     override fun getAuthorities(): Collection<GrantedAuthority> = listOf(SimpleGrantedAuthority(role.code)) //權限腳色
     override fun getPassword(): String = user.password!!
     override fun getUsername(): String = user.acc!!

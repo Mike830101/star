@@ -67,6 +67,7 @@ jasypt:
     string-output-type: base64
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
     bean: encryptorBean
-logging:
-  level:
-    org.springframework.security: debug
+#logging:
+#  level:
+#    org.springframework.security: debug
+#U44382

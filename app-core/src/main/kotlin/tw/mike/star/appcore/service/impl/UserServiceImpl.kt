@@ -20,6 +20,7 @@ import tw.mike.star.appcore.utils.*
 import java.time.LocalDateTime
 import java.util.*
 
+
 /**
  * 帳號管理API
  */
@@ -56,7 +57,7 @@ class UserServiceImpl(
         val tag = "createUser"
         log.debug("$tag,req:$req")
 
-        val idToken = getIdToken()?: throw AuthException("無登入資訊")
+        val idToken = getIdToken()
 
         val insertUser = SysUser(
             uid = SequenceUtils.sequenceUUID(),
@@ -99,7 +100,7 @@ class UserServiceImpl(
         val tag = "updateUser"
         log.debug("$tag,req:$req")
 
-        val idToken = getIdToken()?: throw AuthException("無登入資訊")
+        val idToken = getIdToken()
 
         // 檢查帳號
         val oldUser = userRepository.findByUid(req.uid,null)?: throw UserException("查無此帳號")
@@ -139,7 +140,7 @@ class UserServiceImpl(
         val tag = "removeUser"
         log.debug("$tag,uid:$uid")
 
-        val idToken = getIdToken()?: throw AuthException("無登入資訊")
+        val idToken = getIdToken()
 
         // 檢查帳號
         val oldUser = userRepository.findByUid(uid)?: throw UserException("查無此帳號")
