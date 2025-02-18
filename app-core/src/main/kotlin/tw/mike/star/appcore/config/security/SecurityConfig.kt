@@ -40,7 +40,8 @@ class SecurityConfig(
             }
 //            .securityContext { it.requireExplicitSave(false) } //關閉session
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) }  // 必要時創建 Session
-            .authenticationProvider(authenticationProvider())
+//            .authenticationProvider(authenticationProvider())
+            .authenticationManager (authenticationManager())
             .addFilterAt(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
         return http.build()
     }

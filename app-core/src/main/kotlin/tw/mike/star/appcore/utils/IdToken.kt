@@ -13,7 +13,7 @@ data class IdToken(
     val iss: String,
 
     @JsonProperty("auth_time") // 用戶完成身份驗證的時間戳
-    val authTime: Long,
+    var authTime: Long = 0,
 
     @JsonProperty("sub") // 用戶的唯一標識符
     val sub: UUID,

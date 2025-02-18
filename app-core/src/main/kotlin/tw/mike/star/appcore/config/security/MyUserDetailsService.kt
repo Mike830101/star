@@ -34,7 +34,7 @@ class MyUserDetails(val user: SysUser,val role: Role): UserDetails{
     override fun isAccountNonExpired(): Boolean = true  //true 表示帳戶未過期
     override fun isAccountNonLocked(): Boolean = true   //true 表示帳戶未被鎖定
     override fun isCredentialsNonExpired(): Boolean = true  //true 表示憑證有效
-    override fun isEnabled(): Boolean = true    //true 表示帳號啟用
+    override fun isEnabled(): Boolean = (user.status == 1)    //true 表示帳號啟用
 
     override fun toString(): String {
         return "MyUserDetails(authorities=$authorities,username='${user.acc}', password='$password',isAccountNonExpired=$isAccountNonExpired,isAccountNonLocked=$isAccountNonLocked,isCredentialsNonExpired=$isCredentialsNonExpired,isEnabled=$isEnabled)"
