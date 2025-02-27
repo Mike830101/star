@@ -235,4 +235,9 @@ class UserListResp{
      * 最後登入時間
      */
     var lastLoginTime: LocalDateTime? = null
+
+    override fun toString(): String {
+        return "UserListResp(uid=$uid, account='$account', name='$name', roleName='$roleName', status=$status, lastLoginTime=$lastLoginTime)"
+    }
 }
+
