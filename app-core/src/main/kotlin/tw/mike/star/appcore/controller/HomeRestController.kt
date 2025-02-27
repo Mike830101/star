@@ -12,4 +12,14 @@ class HomeRestController {
     fun error():String {
         return "error~!!!!"
     }
+
+    @GetMapping("/login")
+    fun login():String {
+        return "login.html"
+    }
+
+    @GetMapping("/home")
+    fun home():String {
+        return "home.html"
+    }
 }

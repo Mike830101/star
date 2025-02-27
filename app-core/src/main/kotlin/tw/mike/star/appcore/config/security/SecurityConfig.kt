@@ -36,6 +36,7 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 it.requestMatchers("/api/auth/**","/error").permitAll()
                     .requestMatchers("/api/role/v1/list").hasAnyAuthority("Admin")
+                    .requestMatchers("login").permitAll()
                 it.anyRequest().authenticated()
             }
 //            .securityContext { it.requireExplicitSave(false) } //關閉session
