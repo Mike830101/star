@@ -1,7 +1,6 @@
 package tw.mike.star.appcore.service
 
 import io.jsonwebtoken.*
-import io.jsonwebtoken.security.SignatureException
 import org.springframework.stereotype.Service
 import tw.mike.star.appcore.entity.Role
 import tw.mike.star.appcore.entity.SysUser
@@ -41,12 +40,12 @@ class JwtService(val jwtUtils: JwtUtils) {
      * @param token 用戶提交的 Token
      * @return 有效:IdToken , 無效:null
      * @exception ExpiredJwtException 過期
+     *            SignatureException 簽證錯誤
      */
-    @Throws(ExpiredJwtException::class)
     fun verifyToken(token: String): IdToken? {
+        val claims = jwtUtils.extractAllClaims(token)
+        log.debug("JWT verifyToken ,claims: {}", claims)
         try {
-            val claims = jwtUtils.extractAllClaims(token)
-            log.debug("JWT verifyToken ,claims: {}", claims)
             val iss = claims["iss"] as String
             val sub = claims["sub"] as String
             //過期判斷
@@ -61,22 +60,9 @@ class JwtService(val jwtUtils: JwtUtils) {
 
             val idToken = IdToken(iss,0,UUID.fromString(sub),exp,iat,acc,
                 name,email,mobile,UUID.fromString(roleId),roleName)
-
             return idToken
-        } catch (e: ExpiredJwtException) {
-            throw e
-        } catch (e: UnsupportedJwtException) {
-            log.warn("Request to parse unsupported JWT : {} failed : {}", token, e.message)
-        } catch (e: MalformedJwtException) {
-            log.warn("Request to parse invalid JWT : {} failed : {}", token, e.message)
-        } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
-            log.warn("Request to parse empty or null JWT : {} failed : {}", token, e.message)
-        } catch (e: SignatureException) {
-            log.warn("JWT signature does not match locally computed signature JWT : {} failed : {}", token, e.message)
-        } catch (e: Exception) {
-            log.warn("JWT parse error : {} failed : {}", token, e.message)
+        }catch (ex: Exception){
+            return null
         }
-        return null
     }
 }

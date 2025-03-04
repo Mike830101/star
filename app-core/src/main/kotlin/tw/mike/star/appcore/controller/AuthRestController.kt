@@ -47,7 +47,7 @@ class AuthRestController(
 
             return ok(mapOf("token" to jwtToken))
         }catch (e: BadCredentialsException) {
-            return badRequest(SysCode._2102)
+            return badRequest(SysCode._2003)
         }catch (e: DisabledException) {
             return badRequest(SysCode._2002)
         }

@@ -22,9 +22,11 @@ enum class SysCode {
     _2("2", "權限不合法"),
     _2001("2001", "權限不合法", "apiKey錯誤"),
     _2002("2002", "帳號已停用"),  //DisabledException
+    _2003("2003", "帳號或密碼錯誤"),  //BadCredentialsException
     _2101("2101", "token 已過期"),
     _2102("2102", "token 驗證失敗"),
     _2103("2103", "token 為空"),
+    _2104("2104", "token 不合法","token 簽名錯誤"),  //SignatureException
 
     _3("3", "系統異常"),  //未知Exception
 
