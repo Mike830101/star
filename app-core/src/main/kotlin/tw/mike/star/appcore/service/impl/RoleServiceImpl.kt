@@ -27,9 +27,9 @@ class RoleServiceImpl(
      * @param uid 角色鍵值
      * @exception RoleException 查無此角色
      */
-    override fun getRole(uid: UUID): RoleGetResp {
+    override fun getRole(uid: UUID): RoleGetResp? {
         val tag = "getRole"
-        val role = roleRepository.findByUid(uid)?: throw RoleException("查無此角色")
+        val role = roleRepository.findByUid(uid)?:return null
         return RoleGetResp().apply {
             this.uid = role.uid!!
             this.code = role.code!!

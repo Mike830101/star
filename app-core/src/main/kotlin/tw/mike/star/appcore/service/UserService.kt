@@ -15,7 +15,7 @@ interface UserService{
      * 帳號-查詢單筆。
      * @param uid 帳號鍵值
      */
-    fun getUser(uid: UUID): UserGetResp
+    fun getUser(uid: UUID): UserGetResp?
 
     /**
      * 帳號-建立單筆
