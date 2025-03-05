@@ -6,7 +6,6 @@ import org.mybatis.dynamic.sql.util.kotlin.GroupingCriteriaCollector.Companion.w
 import org.springframework.stereotype.Service
 import tw.mike.star.appcore.entity.Role
 import tw.mike.star.appcore.entity.SysUser
-import tw.mike.star.appcore.exception.AuthException
 import tw.mike.star.appcore.exception.UserException
 import tw.mike.star.appcore.helper.ExcelHelper
 import tw.mike.star.appcore.mapper.*
@@ -39,11 +38,11 @@ class UserServiceImpl(
      * @param uid 賬號鍵值
      * @exception UserException 查無此帳號
      */
-    override fun getUser(uid: UUID): UserGetResp {
+    override fun getUser(uid: UUID): UserGetResp? {
         val tag = "getUser"
         log.debug("$tag,uid:$uid")
 
-        return userMapperExt.findByUid(uid)?: throw UserException("查無此帳號")
+        return userMapperExt.findByUid(uid)
     }
 
     /**
@@ -51,7 +50,6 @@ class UserServiceImpl(
      * @exception UserException 查無此角色
      *                          帳號已被使用
      *                          新增資料庫失敗
-     * @exception AuthException 無登入資訊
      */
     override fun createUser(req: UserCreateReq): UUIdSimpleResp {
         val tag = "createUser"
@@ -94,7 +92,6 @@ class UserServiceImpl(
      * @exception UserException 查無此角色
      *                          查無此角色
      *                          更新帳號失敗
-     * @exception AuthException 無登入資訊
      */
     override fun updateUser(req: UserUpdateReq): UUIdSimpleResp {
         val tag = "updateUser"
@@ -134,7 +131,6 @@ class UserServiceImpl(
      * @param uid 賬號鍵值
      * @exception UserException 查無此角色
      *                          刪除帳號失敗
-     * @exception AuthException 無登入資訊
      */
     override fun removeUser(uid: UUID): UUIdSimpleResp {
         val tag = "removeUser"

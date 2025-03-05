@@ -1,46 +1,74 @@
 package tw.mike.star.appcore.utils
 
 enum class SysCode {
-    OK(0, "OK"),
-    _1(1, "參數錯誤"),
-    _2(2, "權限不合法"),
-    _3(3, "系統異常"),
-    _4(4, "因故無法執行"),
-    _5(5, "登入失敗"),
-    _1000(1000, "缺少必要參數或參數格式不正確"),
-    _1001(1001, "密碼驗證失敗"),
-    _1002(1002, "更新 accessToken 失敗"),
-    _1003(1003, "帳號已存在"),
-    _1004(1004, "資料不存在，無法被更新或刪除"),
-    _2001(2001, "帳號無效或已停用"),
-    _2002(2002, "帳號或密碼錯誤"),
-    _2003(2003, "系統驗證機制錯誤", "codeChallenge 驗證失敗"),
-    _2004(2004, "系統驗證機制錯誤", "codeVerifier 驗證失敗"),
-    _2005(2005, "登入資訊有誤", "session 驗證失敗"),
-    _2006(2006, "登入資訊有誤", "session 缺少必要屬性"),
-    _2007(2007, "登入逾時", "Token 已過期"),
-    _3001(3001, "系統存取資料異常", "資料庫存取異常"),
-    _3002(3002, "電子郵件發送異常"),
-    _3004(3004, "系統存取資料異常", "REDIS存取異常"),
-    _3005(3005, "查無符合條件的路徑"),
-    _4001(4001, "系統排程執行中，目前無法手動觸發執行"),
-    _4002(4002, "此系統排程無法手動觸發執行"),
-    _4003(4003, "此時段為無效，故無法執行"),
-    _4004(4004, "模組被設定為停用");
+    OK("0", "OK"),
 
-    val code: Int
+    /**
+     * 1開頭參數相關
+     * 10** 由全域攔截
+     * 11** 由BindingResult 攔截
+     * 12** 手動判斷
+     */
+    _1("1", "參數錯誤"),
+    _1001("1001", "參數錯誤", "參數效驗失敗"),  //MethodArgumentNotValidException 效驗失敗
+    _1002("1002", "參數錯誤", "參數效驗失敗"),  //HttpMessageNotReadableException  json解析失敗
+    _1101("1101", "參數錯誤", "參數綁定錯誤"),  //BindingResult 攔截
+    _1201("1201", "參數錯誤", "必填項目有誤"),  //手動判斷req必填項目
+
+    /**
+     * 2開頭權限相關
+     * 21** token相關
+     */
+    _2("2", "權限不合法"),
+    _2001("2001", "權限不合法", "apiKey錯誤"),
+    _2002("2002", "帳號已停用"),  //DisabledException
+    _2003("2003", "帳號或密碼錯誤"),  //BadCredentialsException
+    _2101("2101", "token 已過期"),
+    _2102("2102", "token 驗證失敗"),
+    _2103("2103", "token 為空"),
+    _2104("2104", "token 不合法","token 簽名錯誤"),  //SignatureException
+
+    _3("3", "系統異常"),  //未知Exception
+
+    /**
+     * 4開頭資料庫相關
+     * 40** 資料庫查詢失敗
+     * 41** 資料庫查詢成功,內容不符規定
+     */
+    _4("4", "資料庫查詢失敗"),  //由全域攔截
+    _4000("4000", "資料庫失敗", "未知錯誤"),
+    _4001("4001", "資料庫失敗", "自訂訊息錯誤"),
+    _4100("4100", "資料庫查詢失敗"),
+    _4101("4101", "已有重複項目"),
+    _4102("4102", "查無此項目"),
+    _4103("4103", "資料庫創建失敗"),
+    _4104("4104", "資料庫更新失敗"),
+    _4105("4105", "資料庫刪除失敗");
+
+    /**
+     * 錯誤碼
+     */
+    val code: String
+
+    /**
+     * 回覆訊息
+     */
     val message: String
-    var systemMessage: String = ""
-        private set
 
-    constructor(code: Int, message: String) {
+    /**
+     * 備註
+     */
+    private val memo: String
+
+    constructor(code: String, message: String) {
         this.code = code
         this.message = message
+        this.memo = ""
     }
 
-    constructor(code: Int, message: String, systemMessage: String) {
+    constructor(code: String, message: String, memo: String) {
         this.code = code
         this.message = message
-        this.systemMessage = systemMessage
+        this.memo = memo
     }
 }

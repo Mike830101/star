@@ -15,7 +15,7 @@ data class BaseReply(
     val paging: Paging? = null,
 ) {
     //顯示的錯誤代碼
-    val code: Int
+    val code: String
         get() = sysCode!!.code
 
     //顯示的訊息文字 (information為空時以 sysCode 預設文字替代)

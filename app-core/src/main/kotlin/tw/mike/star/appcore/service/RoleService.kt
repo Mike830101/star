@@ -14,7 +14,7 @@ interface RoleService {
      * 角色-查詢單筆。
      * @param uid 角色鍵值
      */
-    fun getRole(uid: UUID): RoleGetResp
+    fun getRole(uid: UUID): RoleGetResp?
 
     /**
      * 角色-建立單筆

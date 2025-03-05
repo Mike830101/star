@@ -1,6 +1,8 @@
 package tw.mike.star.appcore.config.security
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.security.SignatureException
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -12,12 +14,16 @@ import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import tw.mike.star.appcore.service.JwtService
 import tw.mike.star.appcore.utils.IdToken
+import tw.mike.star.appcore.utils.SysCode
 import tw.mike.star.appcore.utils.logger
+import java.io.IOException
+import java.io.Serializable
 
 
 @Component
 class JwtRequestFilter(
     private val jwtService: JwtService,
+    private val objectMapper: ObjectMapper
 ) : OncePerRequestFilter() {
     private val log = logger()
 
@@ -43,17 +49,48 @@ class JwtRequestFilter(
                     log.debug("jwt 驗證成功")
                 }else{
                     log.debug("jwt 驗證失敗")
+                    forbidden(response,SysCode._2102)
+                    return
                 }
             }
-        }catch (e: ExpiredJwtException){
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Token is expired")
-            log.error("jwt 驗證異常: token is expired")
+        } catch (e: ExpiredJwtException){
+            log.debug("jwt 驗證異常: token is expired")
+            forbidden(response,SysCode._2101)
             return
-        }catch (e:Exception){
+        } catch (e: SignatureException) {
+            log.error("jwt 驗證異常: 簽名錯誤")
+            forbidden(response,SysCode._2104)
+            return
+        } catch (e:Exception){
             e.printStackTrace()
             log.error("jwt 驗證異常: ${e.message}")
+            forbidden(response,SysCode._2)
+            return
         }
 
         filterChain.doFilter(request, response)
+    }
+
+
+    /**
+     * 回覆 json 資料。
+     *
+     * @param response the HttpServletResponse to emit
+     */
+    fun forbidden(response: HttpServletResponse, sysCode: SysCode) {
+        val dataMap: MutableMap<String, Serializable> = HashMap()
+        dataMap["code"] = sysCode.code
+        dataMap["message"] = sysCode.message
+
+        // 輸出 json
+        try {
+            val json: String = objectMapper.writeValueAsString(dataMap)
+            response.contentType = "application/json"
+            response.characterEncoding = "UTF-8"
+            response.status = HttpServletResponse.SC_FORBIDDEN
+            response.writer.write(json)
+        } catch (e: IOException) {
+            log.error("Failed to write response", e)
+        }
     }
 }

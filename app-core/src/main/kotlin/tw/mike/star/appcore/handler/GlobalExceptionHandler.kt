@@ -43,16 +43,19 @@ class GlobalExceptionHandler {
         val tag = "handleValidationExceptions"
         log.error("$tag,ex:$ex")
         val errors = ex.bindingResult.allErrors.map { it.defaultMessage }.joinToString(", ")
-        return BaseReply(SysCode._1, errors)
+        return BaseReply(SysCode._1001, errors)
     }
 
 
+    /**
+     * json解析失敗
+     */
     @ExceptionHandler(HttpMessageNotReadableException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleHttpMessageNotReadableException(ex: HttpMessageNotReadableException): BaseReply {
         val tag = "handleHttpMessageNotReadableException"
         log.error("$tag,ex:$ex")
         val errors = ex.localizedMessage
-        return BaseReply(SysCode._1, errors,ex.javaClass.simpleName)
+        return BaseReply(SysCode._1002, errors,ex.javaClass.simpleName)
     }
 }

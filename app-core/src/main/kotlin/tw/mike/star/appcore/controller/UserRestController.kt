@@ -7,12 +7,8 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
-import tw.mike.star.appcore.exception.AuthException
 import tw.mike.star.appcore.exception.UserException
-import tw.mike.star.appcore.model.user.UserCreateReq
-import tw.mike.star.appcore.model.user.UserGetResp
-import tw.mike.star.appcore.model.user.UserListReq
-import tw.mike.star.appcore.model.user.UserUpdateReq
+import tw.mike.star.appcore.model.user.*
 import tw.mike.star.appcore.service.UserService
 import tw.mike.star.appcore.utils.Paging
 import tw.mike.star.appcore.utils.SysCode
@@ -35,25 +31,20 @@ class UserRestController(
     /**
      * MD-3-User-Get
      * 帳號-查詢單筆。
+     * @see UserGetResp return
      */
     @GetMapping
     private fun getUser(@RequestParam(name = "uid", required = true) uid: UUID): Mono<*> {
         val tag = "getUser"
         log.debug("{},uid:{}", tag, uid)
-        try {
-            val resp: UserGetResp = userService.getUser(uid)
-            return ok(resp)
-        }catch (ue:UserException){
-            return badRequest(SysCode._1, ue.message)
-        }catch (e: Exception) {
-            e.printStackTrace()
-            return badRequest(SysCode._3)
-        }
+        val resp: UserGetResp = userService.getUser(uid)?: return badRequest(SysCode._4102)
+        return ok(resp)
     }
 
     /**
      * MD-3-User-Create
      * 帳號-建立單筆。管理員可手動建立帳號。
+     * @see UUIdSimpleResp return
      */
     @PostMapping("/create")
     private fun createUser(@Valid @RequestBody req: UserCreateReq): Mono<*> {
@@ -64,32 +55,24 @@ class UserRestController(
             log.debug("{},resp:{}", tag, resp)
             return ok(resp)
         }catch (ue:UserException){
-            return badRequest(SysCode._1, ue.message)
-        }catch (ae: AuthException){
-            return unauthorized(SysCode._2, ae.message)
-        }catch (e: Exception) {
-            e.printStackTrace()
-            return badRequest(SysCode._3)
+            return badRequest(SysCode._4001, ue.message)
         }
     }
 
     /**
      * MD-3-User-Update
      * 帳號-更新單筆。供管理員更新主帳號。
+     * @see UUIdSimpleResp return
      */
     @PostMapping("/update")
     private fun updateUser(@Valid @RequestBody req: UserUpdateReq): Mono<*> {
         val tag = "updateUser"
         log.debug("{},req:{}", tag, req)
         try {
-            val resp = userService.updateUser(req)
+            val resp:UUIdSimpleResp = userService.updateUser(req)
             return ok(resp)
         }catch (ue:UserException){
-            return badRequest(SysCode._1, ue.message)
-        }catch (ae: AuthException){
-            return unauthorized(SysCode._2, ae.message)
-        }catch (e: Exception) {
-            return badRequest(SysCode._3)
+            return badRequest(SysCode._4001, ue.message)
         }
     }
 
@@ -97,20 +80,17 @@ class UserRestController(
      * MD-3-User-Remove
      * 帳號-刪除單筆。供管理員刪除主帳號。
      * 刪除時標記為已刪除，但資料仍保存於資料庫中。
+     * @see UUIdSimpleResp return
      */
     @GetMapping("/remove")
     private fun removeUser(@RequestParam(name = "uid", required = true) uid:UUID): Mono<*> {
         val tag = "removeUser"
         log.debug("{},uid:{}", tag, uid)
         try {
-            val resp = userService.removeUser(uid)
+            val resp:UUIdSimpleResp = userService.removeUser(uid)
             return ok(resp)
         }catch (ue:UserException){
-            return badRequest(SysCode._1, ue.message)
-        }catch (ae: AuthException){
-            return unauthorized(SysCode._2, ae.message)
-        }catch (e: Exception) {
-            return badRequest(SysCode._3)
+            return badRequest(SysCode._4001, ue.message)
         }
     }
 
@@ -119,6 +99,7 @@ class UserRestController(
      * 帳號-查詢多筆。供管理員查詢主帳號清單。
      * @param limit 取得比數
      * @param offset 跳過比數
+     * @see UserListResp return
      */
     @PostMapping("/list")
     private fun selectUserList(@Valid @RequestBody req: UserListReq,
@@ -126,15 +107,10 @@ class UserRestController(
                                @RequestParam(name = "offset", required = false) offset:Long?): Mono<*> {
         val tag = "selectUserList"
         log.debug("{},limit:{},offset:{}", tag, limit, offset)
-        try {
-            val paging = Paging(limit, offset)
-            val resp = userService.searchUserList(req,paging)
-            log.info("{},resp:{}", tag, resp)
-            return ok(resp,paging)
-        }catch (e: Exception) {
-            e.printStackTrace()
-            return badRequest(SysCode._3)
-        }
+        val paging = Paging(limit, offset)
+        val resp:List<UserListResp> = userService.searchUserList(req,paging)
+        log.info("{},resp:{}", tag, resp)
+        return ok(resp,paging)
     }
 
     /**

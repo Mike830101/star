@@ -24,7 +24,7 @@ import tw.mike.star.appcore.utils.logger
 @EnableWebSecurity
 class SecurityConfig(
     private val myUserDetailsService: MyUserDetailsService,
-    private val jwtRequestFilter: JwtRequestFilter
+    private val jwtRequestFilter: JwtRequestFilter,
 ){
     private val log = logger()
 
